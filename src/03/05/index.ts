@@ -1,4 +1,5 @@
 export class RangeError extends Error {}
+export class httpError extends Error {}
 
 function checkRange(value: number) {
   if (value < 0 || value > 100) {
@@ -7,20 +8,18 @@ function checkRange(value: number) {
 }
 
 export function add(a: number, b: number) {
-  // checkRange(a);
-  // checkRange(b);
+  checkRange(a);
+  checkRange(b);
   const sum = a + b;
   if (sum > 100) {
     return 100;
   }
   return sum;
 }
-// add(1, 2);
-// add('1', '2');
 
 export function sub(a: number, b: number) {
-  // checkRange(a);
-  // checkRange(b);
+  checkRange(a);
+  checkRange(b);
   const sum = a - b;
   if (sum < 0) {
     return 0;
