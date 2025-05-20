@@ -43,9 +43,9 @@ test('指定時間待つと、経過時間をもって reject される', async 
   }
 });
 
-test('return していないため、Promise が解決する前にテストが終了してしまう', () => {
+test('return していないため、Promise が解決する前にテストが終了してしまう', async () => {
   // 失敗を期待して書かれたアサーション
-  expect(wait(2000)).resolves.toBe(3000);
+  //   expect(wait(2000)).resolves.toBe(3000);
   // 正しくはアサーションを return する
-  // return expect(wait(2000)).resolves.toBe(3000);
+  await expect(wait(2000)).resolves.toBe(2000);
 });
