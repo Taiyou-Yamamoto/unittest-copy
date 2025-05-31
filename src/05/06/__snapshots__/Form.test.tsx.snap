@@ -50,22 +50,50 @@ exports[`過去のお届け先がある場合 Snapshot 1`] = `
         はい
       </label>
     </fieldset>
-    <fieldset
-      disabled=""
-      style="opacity: 0.3;"
-    >
+    <fieldset>
       <legend>
-        過去のお届け先
+        新しいお届け先
       </legend>
-      <select
-        name="pastDeliveryAddress"
-      >
-        <option
-          value="address_id_xxxx"
-        >
-          〒167-0051 東京都杉並区荻窪1-00-00
-        </option>
-      </select>
+      <div>
+        <label>
+          郵便番号
+          <input
+            name="postalCode"
+            placeholder="167-0051"
+            type="text"
+          />
+        </label>
+      </div>
+      <div>
+        <label>
+          都道府県
+          <input
+            name="prefectures"
+            placeholder="東京都"
+            type="text"
+          />
+        </label>
+      </div>
+      <div>
+        <label>
+          市区町村
+          <input
+            name="municipalities"
+            placeholder="杉並区荻窪1"
+            type="text"
+          />
+        </label>
+      </div>
+      <div>
+        <label>
+          番地番号
+          <input
+            name="streetNumber"
+            placeholder="00-00"
+            type="text"
+          />
+        </label>
+      </div>
     </fieldset>
     <hr />
     <div>

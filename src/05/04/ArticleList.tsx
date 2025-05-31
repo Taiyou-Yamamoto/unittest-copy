@@ -1,4 +1,4 @@
-import { ArticleListItem, ItemProps } from "./ArticleListItem";
+import { ArticleListItem, ItemProps } from './ArticleListItem';
 
 type Props = {
   items: ItemProps[];
@@ -8,7 +8,7 @@ export const ArticleList = ({ items }: Props) => {
   return (
     <div>
       <h2>記事一覧</h2>
-      {items.length ? (
+      {items ? (
         <ul>
           {items.map((item) => (
             <ArticleListItem {...item} key={item.id} />
