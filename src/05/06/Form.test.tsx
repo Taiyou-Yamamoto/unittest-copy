@@ -39,8 +39,16 @@ function mockHandleSubmit() {
   const mockFn = jest.fn();
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    // https://developer.mozilla.org/ja/docs/Web/API/FormData/FormData
+    // FormDataは、フォームの要素をキーと値のペアとして格納するオブジェクト
+    // FormDataは、オブジェクトのように扱うことができるが、通常のオブジェクトとは異なる
+    // そのため、通常のオブジェクトのようにJSON.stringify()で文字列化することはできない
+    // そのため、FormDataをオブジェクトに変換する必要がある
     const formData = new FormData(event.currentTarget);
     const data: { [k: string]: unknown } = {};
+    console.log('data', data);
+    console.log('formData', formData);
+    console.log('FormData.prototype', FormData.prototype); // Removed: FormData does not have a 'prototype' property
     formData.forEach((value, key) => (data[key] = value));
     mockFn(data);
   };
@@ -57,10 +65,18 @@ describe('過去のお届け先がない場合', () => {
   test('入力・送信すると、入力内容が送信される', async () => {
     const [mockFn, onSubmit] = mockHandleSubmit();
     render(<Form onSubmit={onSubmit} />);
+    // { name: '田中 太郎',phoneNumber: '000-0000-0000'}を入力
     const contactNumber = await inputContactNumber();
+    // inputValues = {
+    //   postalCode: '167-0051',
+    //   prefectures: '東京都',
+    //   municipalities: '杉並区荻窪1',
+    //   streetNumber: '00-00',
+    // } を入力
     const deliveryAddress = await inputDeliveryAddress();
     console.log({ contactNumber });
     console.log({ deliveryAddress });
+    // 「注文内容の確認へ進む」ボタンをクリック
     await clickSubmit();
     expect(mockFn).toHaveBeenCalledWith(expect.objectContaining({ ...contactNumber, ...deliveryAddress }));
   });
@@ -70,6 +86,11 @@ describe('過去のお届け先がない場合', () => {
     expect(container).toMatchSnapshot();
   });
 });
+
+// spyOnは既存のものを書き換える？もの、jest.fnは簡易的な監視関数を作るもの。
+// ✅ ひとことで言い切るなら：
+// 🎯 jest.spyOn() は 「既存のものを一時的にすり替える」
+// 🎯 jest.fn() は 「テスト専用の関数を作る」
 
 describe('過去のお届け先がある場合', () => {
   test('設問に答えるまで、お届け先を選べない', () => {
