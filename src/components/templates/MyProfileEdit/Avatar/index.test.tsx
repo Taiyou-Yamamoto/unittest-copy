@@ -27,6 +27,18 @@ test("画像のアップロードに成功した場合、画像の src 属性が
   mockUploadImage();
   render(<TestComponent />);
   expect(screen.getByRole("img").getAttribute("src")).toBeFalsy();
+  export function selectImageFile(
+    inputTestId = "file",
+    fileName = "hello.png",
+    content = "hello"
+  ) {
+    const user = userEvent.setup();
+    const filePath = [`C:\\fakepath\\${fileName}`];
+    const file = new File([content], fileName, { type: "image/png" });
+    const fileInput = screen.getByTestId(inputTestId);
+    const selectImage = () => user.upload(fileInput, file);
+    return { fileInput, filePath, selectImage };
+  }
   const { selectImage } = selectImageFile();
   await selectImage();
   await waitFor(() =>
